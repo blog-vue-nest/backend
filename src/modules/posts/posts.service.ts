@@ -7,6 +7,10 @@ import { CreatePostDTO } from './dto';
 export class PostsService {
     constructor(@InjectModel(Post) private readonly postRepository: typeof Post) {}
 
+    getAll(): Promise<Post[]> {
+        return this.postRepository.findAll();
+    }
+
     async createPost(dto: CreatePostDTO): Promise<CreatePostDTO> {
         await this.postRepository.create({
             title: dto.title,
@@ -15,5 +19,13 @@ export class PostsService {
             smallDescription: dto.smallDescription
         });
         return dto
+    }
+
+    async deletePost(postId: number) {
+        const result = await this.postRepository.destroy({
+            where: { id: postId }
+        });
+
+        return {status: result}
     }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDTO } from './dto';
 
@@ -6,9 +6,18 @@ import { CreatePostDTO } from './dto';
 export class PostsController {
     constructor(private readonly postsService: PostsService) {}
 
+    @Get('get-all')
+    getAll() {
+        return this.postsService.getAll();
+    }
+
     @Post('create-post')
     createPosts(@Body() dto: CreatePostDTO) {
-        console.log(dto);
         return this.postsService.createPost(dto);
+    }
+
+    @Delete('delete-post/:id')
+    deletePost(@Param('id') postId: number) {
+        return this.postsService.deletePost(postId);
     }
 }
