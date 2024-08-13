@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import configurations from 'src/configurations';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import {Post} from '../posts/models/post.model';
+import { Post } from '../posts/models/post.model';
 import { PostsModule } from '../posts/posts.module';
 
 @Module({
