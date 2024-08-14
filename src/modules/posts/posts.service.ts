@@ -10,24 +10,36 @@ export class PostsService {
   ) {}
 
   getAll(): Promise<Post[]> {
-    return this.postRepository.findAll();
+    try {
+      return this.postRepository.findAll();
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }
 
   async createPost(dto: CreatePostDTO): Promise<CreatePostDTO> {
-    await this.postRepository.create({
-      title: dto.title,
-      img: dto.img,
-      description: dto.description,
-      smallDescription: dto.smallDescription,
-    });
-    return dto;
+    try {
+      await this.postRepository.create({
+        title: dto.title,
+        img: dto.img,
+        description: dto.description,
+        smallDescription: dto.smallDescription,
+      });
+      return dto;
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }
 
-  async deletePost(postId: number) {
-    const result = await this.postRepository.destroy({
-      where: { id: postId },
-    });
+  async deletePost(postId: number): Promise<{ status: number }> {
+    try {
+      const result = await this.postRepository.destroy({
+        where: { id: postId },
+      });
 
-    return { status: result };
+      return { status: result };
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }
 }
