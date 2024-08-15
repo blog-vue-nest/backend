@@ -20,10 +20,10 @@ export class PostsService {
   async createPost(dto: CreatePostDTO): Promise<CreatePostDTO> {
     try {
       await this.postRepository.create({
-        title: dto.title,
+        titleEn: dto.titleEn,
         img: dto.img,
-        description: dto.description,
-        smallDescription: dto.smallDescription,
+        descriptionEn: dto.descriptionEn,
+        smallDescriptionEn: dto.smallDescriptionEn,
       });
       return dto;
     } catch (error: any) {

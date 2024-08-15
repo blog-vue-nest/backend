@@ -1,4 +1,5 @@
 export default () => ({
+  frontend_url: process.env.FRONTEND_URL,
   port: process.env.PORT,
 
   db_port: process.env.DB_PORT,

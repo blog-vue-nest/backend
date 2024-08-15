@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "blog-vue-nest",
+    "password": "blog-vue-nest",
+    "database": "blog-vue-nest",
+    "host": "localhost",
+    "dialect": "postgres",
+    "port": 5432
+  },
+  "test": {
+    "username": "blog-vue-nest",
+    "password": "blog-vue-nest",
+    "database": "blog-vue-nest",
+    "host": "localhost",
+    "dialect": "postgres",
+    "port": 5432
+  },
+  "production": {
+    "username": "blog-vue-nest",
+    "password": "blog-vue-nest",
+    "database": "blog-vue-nest",
+    "host": "localhost",
+    "dialect": "postgres",
+    "port": 5432
+  }
+}

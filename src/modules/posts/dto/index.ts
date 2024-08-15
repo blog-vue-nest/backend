@@ -4,21 +4,21 @@ import { IsString } from 'class-validator';
 export class CreatePostDTO {
   @ApiProperty({ description: 'Title of the post max: 255 characters' })
   @IsString()
-  title: string;
+  titleEn: string;
 
   @ApiProperty({ description: 'Image URLs max: 255 characters' })
   @IsString()
   img: string;
 
   @ApiProperty({
-    description: 'Full description of the post max: 255 characters',
+    description: 'Full description of the post',
   })
   @IsString()
-  description: string;
+  descriptionEn: string;
 
   @ApiProperty({
-    description: 'Small description of the post max: 255 characters',
+    description: 'Small description of the post',
   })
   @IsString()
-  smallDescription: string;
+  smallDescriptionEn: string;
 }
