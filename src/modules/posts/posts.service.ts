@@ -20,10 +20,15 @@ export class PostsService {
     }
   }
 
-  getAll(): Promise<Post[]> {
+  getAll(page: number): Promise<Post[]> {
     try {
+      const limitInPage = 9;
+      const offset = (page - 1) * limitInPage;
+
       return this.postRepository.findAll({
         include: [Category],
+        limit: limitInPage,
+        offset: offset,
       });
     } catch (error: any) {
       throw new Error(error);

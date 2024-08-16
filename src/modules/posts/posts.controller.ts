@@ -4,8 +4,10 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDTO } from './dto';
@@ -15,8 +17,8 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Get('get-all')
-  getAll() {
-    return this.postsService.getAll();
+  getAll(@Query('page', ParseIntPipe) page: number = 1) {
+    return this.postsService.getAll(page);
   }
 
   @Get('get-post/:id')
