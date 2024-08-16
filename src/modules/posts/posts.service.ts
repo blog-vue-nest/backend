@@ -112,4 +112,16 @@ export class PostsService {
       throw new Error(error);
     }
   }
+
+  getPopularPosts(): Promise<Post[]> {
+    try {
+      return this.postRepository.findAll({
+        include: [Category],
+        order: [['views', 'DESC']],
+        limit: 6,
+      });
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  }
 }

@@ -16,6 +16,11 @@ import { CreatePostDTO } from './dto';
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  @Get('get-popular')
+  getPopular() {
+    return this.postsService.getPopularPosts();
+  }
+
   @Get('get-all')
   getAll(@Query('page', ParseIntPipe) page: number = 1) {
     return this.postsService.getAll(page);
