@@ -1,24 +1,44 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 
 export class CreatePostDTO {
-  @ApiProperty({ description: 'Title of the post max: 255 characters' })
+  @ApiProperty({ description: 'Category id' })
+  @IsNumber()
+  categoryId: number;
+
+  @ApiProperty({ description: 'Title en of the post max: 255 characters' })
   @IsString()
   titleEn: string;
+
+  @ApiProperty({ description: 'Title ua of the post max: 255 characters' })
+  @IsString()
+  titleUa: string;
 
   @ApiProperty({ description: 'Image URLs max: 255 characters' })
   @IsString()
   img: string;
 
   @ApiProperty({
-    description: 'Full description of the post',
+    description: 'Full description en of the post',
   })
   @IsString()
   descriptionEn: string;
+
+  @ApiProperty({
+    description: 'Full description ua of the post',
+  })
+  @IsString()
+  descriptionUa: string;
 
   @ApiProperty({
     description: 'Small description of the post',
   })
   @IsString()
   smallDescriptionEn: string;
+
+  @ApiProperty({
+    description: 'Small description ua of the post',
+  })
+  @IsString()
+  smallDescriptionUa: string;
 }

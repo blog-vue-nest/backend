@@ -6,10 +6,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Post } from '../posts/models/post.model';
 import { PostsModule } from '../posts/posts.module';
+import { CategoriesModule } from '../categories/categories.module';
+import { Category } from '../categories/models/category.model';
 
 @Module({
   imports: [
     PostsModule,
+    CategoriesModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configurations],
@@ -26,7 +29,7 @@ import { PostsModule } from '../posts/posts.module';
         password: configService.get('db_password'),
         synchronize: true,
         autoLoadModels: true,
-        models: [Post],
+        models: [Post, Category],
       }),
     }),
   ],

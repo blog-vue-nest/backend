@@ -22,6 +22,6 @@
     "target": "esnext",
     "moduleResolution": "Node"
   },
-  "include": ["src/**/*.ts", "sequelize-cli.config.ts", "migrations/**/*.ts"],
+  "include": ["src/**/*.ts", "sequelize-cli.config.ts", "src/database/migrations/**/*.ts"],
   "exclude": ["node_modules"]
 }

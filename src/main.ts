@@ -8,15 +8,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   const port = configService.get('port');
-  const frontendUrl = configService.get('frontend_url');
 
   app.useGlobalPipes(new ValidationPipe());
 
-  app.enableCors({
-    origin: frontendUrl,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type, Authorization',
-  });
+  app.enableCors();
 
   const config = new DocumentBuilder()
     .setTitle('blog-vue-nest api')
