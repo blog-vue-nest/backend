@@ -124,4 +124,16 @@ export class PostsService {
       throw new Error(error);
     }
   }
+
+  getRecentPosts(): Promise<Post[]> {
+    try {
+      return this.postRepository.findAll({
+        include: [Category],
+        order: [['createdAt', 'DESC']],
+        limit: 4,
+      });
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  }
 }

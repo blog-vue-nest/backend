@@ -21,6 +21,11 @@ export class PostsController {
     return this.postsService.getPopularPosts();
   }
 
+  @Get('get-recent')
+  getRecentPosts() {
+    return this.postsService.getRecentPosts();
+  }
+
   @Get('get-all')
   getAll(@Query('page', ParseIntPipe) page: number = 1) {
     return this.postsService.getAll(page);
