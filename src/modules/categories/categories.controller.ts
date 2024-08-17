@@ -4,8 +4,10 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CreateCategoryDTO } from './dto';
 import { CategoriesService } from './categories.service';
@@ -15,8 +17,11 @@ export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Get('get-all')
-  getAll() {
-    return this.categoriesService.getAll();
+  getAll(
+    @Query('page', ParseIntPipe) page: number,
+    @Query('limit', ParseIntPipe) limit: number,
+  ) {
+    return this.categoriesService.getAll({ page, limit });
   }
 
   @Get('get-category/:id')

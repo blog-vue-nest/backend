@@ -2,16 +2,29 @@ import { Injectable } from '@nestjs/common';
 import { Category } from './models/category.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateCategoryDTO } from './dto';
+import { PaginationService } from 'src/common/pagination/pagination.service';
+import {
+  PaginationOptionsDTO,
+  PaginationResultDTO,
+} from 'src/common/pagination/dto';
 
 @Injectable()
 export class CategoriesService {
   constructor(
     @InjectModel(Category) private readonly categoryRepository: typeof Category,
+    private readonly paginationService: PaginationService,
   ) {}
 
-  getAll(): Promise<Category[]> {
+  async getAll(
+    paginationOptions: PaginationOptionsDTO,
+  ): Promise<PaginationResultDTO<Category>> {
     try {
-      return this.categoryRepository.findAll();
+      const categories = await this.categoryRepository.findAll();
+
+      return this.paginationService.paginate<Category>(
+        categories,
+        paginationOptions,
+      );
     } catch (error: any) {
       throw new Error(error);
     }
