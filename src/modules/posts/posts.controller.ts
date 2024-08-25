@@ -9,10 +9,12 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDTO } from './dto';
 import { ApiQuery } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/guards/jwt-guard';
 
 @Controller('posts')
 export class PostsController {
@@ -53,21 +55,25 @@ export class PostsController {
     return this.postsService.getPostById(postId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch('update-post/:id')
   updateCategory(@Param('id') postId: number, @Body() dto: CreatePostDTO) {
     return this.postsService.updatePost(postId, dto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch('update-post-views/:id')
   updateViews(@Param('id') postId: number) {
     return this.postsService.updateViews(postId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('create-post')
   createPosts(@Body() dto: CreatePostDTO) {
     return this.postsService.createPost(dto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('delete-post/:id')
   deletePost(@Param('id') postId: number) {
     return this.postsService.deletePost(postId);

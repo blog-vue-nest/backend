@@ -10,12 +10,14 @@ import { CategoriesModule } from '../categories/categories.module';
 import { Category } from '../categories/models/category.model';
 import { User } from '../users/models/user.model';
 import { UsersModule } from '../users/users.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
     PostsModule,
     CategoriesModule,
     UsersModule,
+    AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configurations],

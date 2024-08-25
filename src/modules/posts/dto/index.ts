@@ -14,7 +14,7 @@ export class CreatePostDTO {
   @IsString()
   titleUa: string;
 
-  @ApiProperty({ description: 'Image URLs max: 255 characters' })
+  @ApiProperty({ description: 'Image' })
   @IsString()
   img: string;
 
