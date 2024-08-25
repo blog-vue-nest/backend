@@ -9,12 +9,14 @@ import {
   Patch,
   Post,
   Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDTO } from './dto';
 import { ApiQuery } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/guards/jwt-guard';
+import { RequestOptions } from 'https';
 
 @Controller('posts')
 export class PostsController {
@@ -69,8 +71,8 @@ export class PostsController {
 
   @UseGuards(JwtAuthGuard)
   @Post('create-post')
-  createPosts(@Body() dto: CreatePostDTO) {
-    return this.postsService.createPost(dto);
+  createPosts(@Body() dto: CreatePostDTO, @Req() req: RequestOptions) {
+    return this.postsService.createPost(dto, req);
   }
 
   @UseGuards(JwtAuthGuard)

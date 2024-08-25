@@ -8,12 +8,15 @@ import {
   PaginationOptionsDTO,
   PaginationResultDTO,
 } from 'src/common/pagination/dto';
+import { TokenService } from '../token/token.service';
+import { RequestOptions } from 'https';
 
 @Injectable()
 export class PostsService {
   constructor(
     @InjectModel(Post) private readonly postRepository: typeof Post,
     private readonly paginationService: PaginationService,
+    private readonly tokenService: TokenService,
   ) {}
 
   getPostById(postId: number): Promise<Post> {
@@ -39,11 +42,17 @@ export class PostsService {
     }
   }
 
-  async createPost(dto: CreatePostDTO): Promise<{ status: number }> {
+  async createPost(
+    dto: CreatePostDTO,
+    request: RequestOptions,
+  ): Promise<{ status: number }> {
     const categoryExists = await Category.findByPk(dto.categoryId);
     if (!categoryExists) {
       throw new Error('Category does not exist');
     }
+
+    const decodedToken = await this.tokenService.decodeJwtToken(request);
+    const userId = decodedToken.user.id;
 
     try {
       await this.postRepository.create({
@@ -55,6 +64,7 @@ export class PostsService {
         descriptionUa: dto.descriptionUa,
         smallDescriptionEn: dto.smallDescriptionEn,
         smallDescriptionUa: dto.smallDescriptionUa,
+        userId,
       });
       return { status: 1 };
     } catch (error: any) {

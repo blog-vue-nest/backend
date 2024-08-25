@@ -43,11 +43,8 @@ export class AuthService {
   }
 
   async getUser(request: RequestOptions) {
-    const authHeader = request.headers.authorization;
-    const token = authHeader.split(' ')[1];
-
     try {
-      const decoded = await this.tokenService.decodeJwtToken(token);
+      const decoded = await this.tokenService.decodeJwtToken(request);
       const user = await this.usersService.findUserById(decoded.user.id);
 
       return user;
