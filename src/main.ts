@@ -20,7 +20,6 @@ async function bootstrap() {
     .setTitle('blog-vue-nest api')
     .setDescription('This api for blog-vue-nest api')
     .setVersion('1.0')
-    .addTag('API')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

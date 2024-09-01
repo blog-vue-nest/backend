@@ -12,3 +12,12 @@ export class CreateUserDTO {
   @IsString()
   password: string;
 }
+
+export class UpdateUserDTO {
+  @ApiProperty({ description: 'user name' })
+  @IsString()
+  name: string;
+  @ApiProperty({ description: 'user email' })
+  @IsString()
+  email: string;
+}
