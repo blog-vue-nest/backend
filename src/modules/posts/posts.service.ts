@@ -20,11 +20,10 @@ export class PostsService {
     private readonly tokenService: TokenService,
   ) {}
 
-  async searchPosts(searchValue: string, limit: number) {
+  async searchPosts(searchValue: string, limit: number | null) {
     try {
-      const dataPosts = await this.postRepository.findAll({
+      const options = {
         include: [],
-        limit: limit || 10,
         where: {
           [Op.or]: [
             { titleEn: { [Op.like]: `%${searchValue}%` } },
@@ -35,7 +34,13 @@ export class PostsService {
             { smallDescriptionUa: { [Op.like]: `%${searchValue}%` } },
           ],
         },
-      });
+      };
+
+      if (limit) {
+        Object.assign(options, { limit });
+      }
+
+      const dataPosts = await this.postRepository.findAll(options);
 
       return dataPosts;
     } catch (error: any) {

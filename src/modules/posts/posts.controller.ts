@@ -22,20 +22,21 @@ import { RequestOptions } from 'https';
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
-  @ApiTags('posts')
   @ApiQuery({ name: 'search', required: true, type: String })
   @ApiQuery({
     name: 'limit',
     required: false,
     type: Number,
-    description: 'Number of posts to return, default is 10',
+    description: 'Number of posts to return',
   })
   @Get('search')
-  searchPots(
+  searchPosts(
     @Query('search') searchValue: string,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Query('limit', new DefaultValuePipe(0), ParseIntPipe)
+    limit: number,
   ) {
-    return this.postsService.searchPosts(searchValue, limit);
+    const numericLimit = limit ? limit : null;
+    return this.postsService.searchPosts(searchValue, numericLimit);
   }
 
   @ApiTags('posts')
