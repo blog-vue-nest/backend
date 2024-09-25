@@ -10,6 +10,7 @@ import {
 } from 'src/common/pagination/dto';
 import { TokenService } from '../token/token.service';
 import { RequestOptions } from 'https';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class PostsService {
@@ -18,6 +19,29 @@ export class PostsService {
     private readonly paginationService: PaginationService,
     private readonly tokenService: TokenService,
   ) {}
+
+  async searchPosts(searchValue: string, limit: number) {
+    try {
+      const dataPosts = await this.postRepository.findAll({
+        include: [],
+        limit: limit || 10,
+        where: {
+          [Op.or]: [
+            { titleEn: { [Op.like]: `%${searchValue}%` } },
+            { titleUa: { [Op.like]: `%${searchValue}%` } },
+            { descriptionEn: { [Op.like]: `%${searchValue}%` } },
+            { descriptionUa: { [Op.like]: `%${searchValue}%` } },
+            { smallDescriptionEn: { [Op.like]: `%${searchValue}%` } },
+            { smallDescriptionUa: { [Op.like]: `%${searchValue}%` } },
+          ],
+        },
+      });
+
+      return dataPosts;
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  }
 
   getPostById(postId: number): Promise<Post> {
     try {
@@ -35,6 +59,7 @@ export class PostsService {
     try {
       const dataPosts = await this.postRepository.findAll({
         include: [Category],
+        order: [['createdAt', 'DESC']],
       });
       return this.paginationService.paginate(dataPosts, paginationDTO);
     } catch (error: any) {
